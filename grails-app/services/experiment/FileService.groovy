@@ -15,7 +15,8 @@ class FileService {
 //        for (def i = 1; i <= sents.size(); i++) {
 //            sequence.push(i)
 //        }
-        sequence = (1 .. sents.size()).toList()
+        sequence = (0 .. sents.size()-1).toList()
+        println "Sequence"+sequence
     }
     def getSentencesScrambled() {
         println "Getting Sentences"
@@ -24,5 +25,15 @@ class FileService {
         Collections.shuffle(sequence)
 
         return ['sentences':sentences,'orders':orders,'sequence':sequence]
+    }
+    def writeFile(SentenceCommand sentenceCommand){
+        File file = new File("participants/${sentenceCommand.userId}.txt")
+        if(file.exists()){
+            file << "$sentenceCommand.sentence||$sentenceCommand.solution||$sentenceCommand.time\n"
+        }
+        else
+        {
+            file.write "$sentenceCommand.sentence||$sentenceCommand.solution||$sentenceCommand.time\n"
+        }
     }
 }

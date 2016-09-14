@@ -9,7 +9,9 @@
 //= require webspeech.js
 //= require angular.js
 //= require angular-route.js
+//= require angular-animate.js
 //= require angular-app.js
+//= require time.service.js
 //= require experimentController.js
 
 

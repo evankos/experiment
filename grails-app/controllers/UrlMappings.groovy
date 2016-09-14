@@ -35,7 +35,7 @@ class UrlMappings {
         }
 
         "/api/sentences"(controller: 'sentence') {
-            action = [GET: 'index']
+            action = [GET: 'index', POST: 'save']
         }
         /**
          * ERRORS

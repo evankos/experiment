@@ -49,7 +49,9 @@
 
         $scope.send = function(){
             timeService.eventTrigger();
-
+            if ($scope.recognizing) {
+                $scope.recognition.stop();
+            }
             if($scope.listening){
                 $scope.listener.stop()
                 $scope.listening = false;
@@ -75,7 +77,7 @@
             res.error(function(data, status, headers, config) {
                 $scope.error.message = JSON.stringify({data: data});
             });
-
+            $scope.final_transcript = '';
             document.getElementById("text").value = "";
         };
         $scope.showInfo = function(s){
@@ -92,7 +94,7 @@
             console.log("No webkit");
             $scope.error.message = "Please update your chrome version to >33";
         } else {
-            start_button.style.display = 'inline-block';
+
             $scope.recognition = new webkitSpeechRecognition();
             $scope.recognition.continuous = true;
             $scope.recognition.interimResults = true;
@@ -113,7 +115,7 @@
                     $scope.ignore_onend = true;
                 }
                 if (event.error == 'not-allowed') {
-                    if (event.timeStamp - start_timestamp < 100) {
+                    if (event.timeStamp - $scope.start_timestamp < 100) {
                         $scope.showInfo('info_blocked');
                     } else {
                         $scope.showInfo('info_denied');
@@ -152,15 +154,17 @@
                         interim_transcript += event.results[i][0].transcript;
                     }
                 }
-                $scope.final_transcript = final_transcript;
+
                 document.getElementById("text").value = $scope.final_transcript;
             };
         }
         $scope.startButton = function (event) {
             if ($scope.recognizing) {
                 $scope.recognition.stop();
+                $scope.recognizing = false;
                 return;
             }
+            $scope.recognizing = true;
             $scope.final_transcript = '';
             document.getElementById("text").value = $scope.final_transcript;
             $scope.recognition.lang = 'en-US';

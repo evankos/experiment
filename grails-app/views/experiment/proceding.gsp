@@ -16,7 +16,7 @@
         <div class="jumbotron" ng-show="!done">
             {{solution.order}} : {{solution.sentence}}</br>
             <textarea id="text" ></textarea></br>
-            <a class="btn btn-primary" href="#" id="rec" ng-click="startButton()" ng-class="{ active: !registering }">{{listening ? "Stop Listening" : "Listen"}}</a>
+            <a class="btn btn-primary" href="#" id="rec" ng-click="startButton($event)" ng-class="{ active: !registering }">{{recognizing ? "Stop Listening" : "Listen"}}</a>
             <a class="btn btn-primary" href="#"  ng-click="send()" ng-class="{ active: !registering }">send</a>
         </div>
     </div>

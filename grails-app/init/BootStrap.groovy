@@ -5,7 +5,7 @@ class BootStrap {
                 'I have an Apple',
                 'I have two Apples'
         ],['speak','write'].toList())
-        println fileService.getSentencesScrambled()
+//        println fileService.getSentencesScrambled()
     }
     def destroy = {
     }

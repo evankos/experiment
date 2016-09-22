@@ -8,9 +8,7 @@ import grails.validation.Validateable
 
 
 class SentenceCommand implements Validateable {
-    String userId
-    String userName
-    Integer sentenceId
+
     String solution
     String sentence
     String order

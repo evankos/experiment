@@ -12,6 +12,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 abstract class BaseController {
 
 
+
     def handleValidationException(ValidationErrors ve){
         def errors = []
         def locale = Locale.getDefault()

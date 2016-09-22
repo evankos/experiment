@@ -5,17 +5,18 @@
 // You're free to add application-wide JavaScript to this file, but it's generally better
 // to create separate JavaScript files as needed.
 //
-//= require platform.js
-//= require webspeech.js
 //= require angular.js
-//= require angular-route.js
 //= require angular-animate.js
+//= require angular-audio-recorder.min.js
 //= require angular-app.js
 //= require time.service.js
+//= require rootController.js
 //= require experimentController.js
+//= require loginController.js
 
 
-//= require_tree .
+
+
 //= require_self
 
 //var app = angular.module('experiment.app', [

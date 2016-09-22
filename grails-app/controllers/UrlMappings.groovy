@@ -11,7 +11,9 @@ class UrlMappings {
 //        "/"(controller: "root") {
 //            action = [GET: 'index']
 //        }
+        "/exception/**"(controller: 'exception', action: 'unsupportedBrowser') {
 
+        }
         ['experiment', 'administration'].each { name ->
 
             "/${name}"(controller: 'root', action: 'serveApp'){
@@ -36,6 +38,12 @@ class UrlMappings {
 
         "/api/sentences"(controller: 'sentence') {
             action = [GET: 'index', POST: 'save']
+        }
+        "/api/watson"(controller: 'sentence') {
+            action = [POST: 'ibmCall']
+        }
+        "/api/login"(controller: 'sentence') {
+            action = [POST: 'login']
         }
         /**
          * ERRORS

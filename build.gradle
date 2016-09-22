@@ -58,6 +58,7 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-tomcat"
     compile "org.grails:grails-dependencies"
     compile "org.grails:grails-web-boot"
+    compile 'com.ibm.watson.developer_cloud:java-sdk:2.10.0'
 
     compile "org.grails.plugins:hibernate"
     compile "org.grails.plugins:cache"

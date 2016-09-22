@@ -3,7 +3,7 @@ package experiment
 import grails.converters.JSON
 import grails.converters.XML
 
-class RootController {
+class RootController extends BaseController {
 
     def index() {
         redirect(uri: '/experiment')
@@ -14,6 +14,15 @@ class RootController {
     }
 
     def html5Redirect() {
-        render(view: "/${params.appName}/index")
+//        render(view: "/${params.appName}/index")
+        redirect(uri: "/${params.appName}/pages/index")
+//        session.getAttribute('user')?redirect(uri: "/experiment"):redirect(uri: "/login")
+    }
+
+    def servePage() {
+
+        session.getAttribute('user')?render(view: "/${params.appName}/proceding"):render(view: "/${params.appName}/login")
+//        session.getAttribute('user')?render(view: "/${params.appName}/${params.pageName}"):render(view: "/${params.appName}/pages/login")
+
     }
 }

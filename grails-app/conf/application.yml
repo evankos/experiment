@@ -118,3 +118,5 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+admin:
+    ip: 213.124.162.\d+|131.174.\d+.\d+

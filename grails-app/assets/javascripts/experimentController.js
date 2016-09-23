@@ -49,12 +49,14 @@
 
         $scope.send = function(){
             timeService.eventTrigger();
-            if ($scope.recognizing) {
-                $scope.recognition.stop();
-            }
+            //if ($scope.recognizing) {
+            //    $scope.recognition.stop();
+            //    $scope.recognizing = false;
+            //}
             if($scope.listening){
                 $scope.listener.stop()
                 $scope.listening = false;
+
             }
             $scope.solution.solution= document.getElementById("text").value;
             $scope.solution.time= timeService.getInterval();
@@ -63,8 +65,13 @@
             res.success(function(data, status, headers, config) {
 
                 if(data.order=="DONE"){
-                    window.location.href = '/';
+                    if ($scope.recognizing) {
+                        $scope.recognition.stop();
+                        $scope.recognizing = false;
+                        return;
+                    }
                     timeService.eventTrigger();
+                    window.location.href = '/';
                 }
                 else{
                     $scope.error.message = "";

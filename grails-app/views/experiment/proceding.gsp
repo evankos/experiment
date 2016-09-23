@@ -10,28 +10,37 @@
     <meta name="layout" content="main"/>
 </head>
 <body>
-<div ng-controller="experimentController">
-
-    <div class="row text-center" >
-        <div class="jumbotron" ng-show="!done">
-            {{solution.order}} : {{solution.sentence}}</br>
-            <textarea id="text" ></textarea></br>
-            <a class="btn btn-primary" href="#" id="rec" ng-click="startButton($event)" ng-class="{ active: !registering }">{{recognizing ? "Stop Listening" : "Listen"}}</a>
-            <a class="btn btn-primary" href="#"  ng-click="send()" ng-class="{ active: !registering }">send</a>
+    <div ng-controller="experimentController">
+        <div class="col-xs-12">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <h2 class="col-xs-4">{{solution.order}} <span class="label label-default">{{solution.sentence}}</span></h2>
+                </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-10">
+                        <textarea  rows="5" class="form-control" id="text" style="font-family: monospace" ></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <div class="pull-right">
+                        <button class="btn btn-default" ng-click="startButton($event)">{{recognizing ? "Stop Listening" : "Listen"}}</button>
+                        <button class="btn btn-default" ng-click="send()">Send</button>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <footer class="text-center">
+            <div class="container-fluid">
+                <div class="row">
+                    ERROR : {{error.message}}
+                </div>
+            </div>
+        </footer>
     </div>
-
-    <div class="row text-center" >
-        <div  class="jumbotron" ng-show="done" class="text-center">
-            DONE
-        </div>
-    </div>
-
-    <footer class="text-center">
-        <div>
-            ERROR : {{error.message}}
-        </div>
-    </footer>
-</div>
 </body>
 </html>

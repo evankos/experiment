@@ -11,20 +11,41 @@
     <meta name="layout" content="main"/>
 </head>
 <body>
-<div ng-controller="loginController">
-    <div class="row text-center" >
-        <div class="jumbotron">
-            Subject Name: <input id="name" ng-model="subject.name"></br>
-            Subject Unique ID: <input id="uid" ng-model="subject.id"></br>
-            <a class="btn btn-primary" href="#" ng-click="register()" ng-class="{ active: registering }">Set Active</a>
+    <div class="container-fluid">
+        <div ng-controller="loginController">
+            <div class="col-xs-12">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="name" class="col-xs-2 control-label">Subject Name</label>
+                        <div class="col-xs-10">
+                            <input id="name" class="form-control" ng-model="subject.name" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="uid" class="col-xs-2 control-label">Subject Unique ID</label>
+                        <div class="col-xs-10">
+                            <input id="uid" class="form-control" ng-model="subject.id" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-10 col-xs-offset-1">
+                            <div class="pull-right">
+                                <button class="btn btn-default" ng-click="register()">Set Active</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="text-center">
+                <div class="container-fluid">
+                    <div class="row">
+                        ERROR : {{error.message}}
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
-    <footer class="text-center">
-        <div>
-            ERROR : {{error.message}}
-        </div>
-    </footer>
-</div>
 </body>
 </html>
 

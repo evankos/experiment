@@ -59,9 +59,11 @@ class SentenceController extends BaseController {
         if (sentenceCommand.hasErrors()) {
             handleValidationException(sentenceCommand.errors)
         }
+        else{
+            session["index"] = session.getAttribute("index")+1
+            fileService.writeFile(session.getAttribute("user"),sentenceCommand)
+        }
 
-        fileService.writeFile(session.getAttribute("user"),sentenceCommand)
-        session["index"] = session.getAttribute("index")+1
         index()
     }
 }

@@ -49,6 +49,7 @@
 
         $scope.send = function(){
             timeService.eventTrigger();
+            $scope.serverInteraction = true;
             //if ($scope.recognizing) {
             //    $scope.recognition.stop();
             //    $scope.recognizing = false;
@@ -56,7 +57,6 @@
             if($scope.listening){
                 $scope.listener.stop()
                 $scope.listening = false;
-
             }
             $scope.solution.solution= document.getElementById("text").value;
             $scope.solution.time= timeService.getInterval();
@@ -79,9 +79,10 @@
                     $scope.solution.order=data.order;
                     timeService.eventTrigger();
                 }
-
+                $scope.serverInteraction = false;
             });
             res.error(function(data, status, headers, config) {
+                $scope.serverInteraction = false;
                 $scope.error.message = JSON.stringify({data: data});
             });
             $scope.final_transcript = '';
@@ -90,7 +91,7 @@
         $scope.showInfo = function(s){
             $scope.error.message = s;
         };
-        
+        $scope.serverInteraction = false;
         $scope.create_email = false;
         $scope.final_transcript = '';
         $scope.recognizing = false;
@@ -174,7 +175,8 @@
             $scope.recognizing = true;
             $scope.final_transcript = '';
             document.getElementById("text").value = $scope.final_transcript;
-            $scope.recognition.lang = 'en-US';
+            //$scope.recognition.lang = 'en-US';
+            $scope.recognition.lang = 'en-GB';
             $scope.recognition.start();
             $scope.ignore_onend = false;
             $scope.showInfo('info_allow');

@@ -20,7 +20,7 @@
             <div class="form-horizontal">
                 <div class="form-group">
                     <div class="col-xs-10">
-                        <textarea  rows="5" class="form-control" id="text" style="font-family: monospace" ></textarea>
+                        <textarea  rows="5" class="form-control" id="text" style="font-family: monospace" ng-disabled="recognizing"></textarea>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="col-xs-8 col-xs-offset-2">
                     <div class="pull-right">
                         <button class="btn btn-default" ng-click="startButton($event)">{{recognizing ? "Stop Listening" : "Listen"}}</button>
-                        <button class="btn btn-default" ng-click="send()">Send</button>
+                        <button class="btn btn-default" ng-click="send()" ng-disabled="serverInteraction">Send</button>
                     </div>
                 </div>
             </div>

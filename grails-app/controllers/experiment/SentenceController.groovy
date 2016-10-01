@@ -62,8 +62,14 @@ class SentenceController extends BaseController {
         else{
             session["index"] = session.getAttribute("index")+1
             fileService.writeFile(session.getAttribute("user"),sentenceCommand)
+            saveDB(sentenceCommand)
         }
 
         index()
+    }
+
+    private void saveDB(SentenceCommand sentenceCommand){
+        new DataPoints(userID: session.getAttribute("user"),userName: session.getAttribute("userName"),solution: sentenceCommand.solution,
+                sentence: sentenceCommand.sentence,time: sentenceCommand.time,instruction: sentenceCommand.order).save(flush: true)
     }
 }

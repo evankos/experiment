@@ -59,7 +59,7 @@ dependencies {
     compile "org.grails:grails-dependencies"
     compile "org.grails:grails-web-boot"
     compile 'com.ibm.watson.developer_cloud:java-sdk:2.10.0'
-
+    compile 'mysql:mysql-connector-java:5.1.29'
     compile "org.grails.plugins:hibernate"
     compile "org.grails.plugins:cache"
     compile "org.hibernate:hibernate-ehcache"

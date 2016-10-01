@@ -12,7 +12,7 @@
     </head>
     <body ng-app="experiment.app" ng-controller="rootController">
         <header class="text-center">
-            <h1>Experiment<small>speak and write</small></h1>
+            <h1>Experiment<small>speak//type//swipe</small></h1>
         </header>
         %{--<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>--}%
         <g:layoutBody/>

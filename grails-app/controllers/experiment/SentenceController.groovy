@@ -2,7 +2,7 @@ package experiment
 import grails.converters.JSON
 
 
-import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText
+//import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText
 
 
 class SentenceController extends BaseController {
@@ -28,17 +28,17 @@ class SentenceController extends BaseController {
         }
     }
 
-    def ibmCall(WatsonCommand watsonCommand){
-        if (watsonCommand.hasErrors()) {
-            handleValidationException(watsonCommand.errors)
-        }
-        println "ibmCall"
-        SpeechToText textService = new SpeechToText();
-
-        JSON.use('deep') {
-            render watsonCommand as JSON
-        }
-    }
+//    def ibmCall(WatsonCommand watsonCommand){
+//        if (watsonCommand.hasErrors()) {
+//            handleValidationException(watsonCommand.errors)
+//        }
+//        println "ibmCall"
+//        SpeechToText textService = new SpeechToText();
+//
+//        JSON.use('deep') {
+//            render watsonCommand as JSON
+//        }
+//    }
 
     def login(LoginCommand loginCommand){
         if (loginCommand.hasErrors()) {

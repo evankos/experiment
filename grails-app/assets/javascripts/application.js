@@ -7,6 +7,8 @@
 //
 //= require angular.js
 //= require angular-animate.js
+//= require angular-sanitize.js
+//= require ui-bootstrap-tpls-2.2.0.js
 //= require angular-audio-recorder.min.js
 //= require angular-app.js
 //= require time.service.js

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('experiment.app').controller('experimentController', function ($scope, timeService, $location, $http) {
+    angular.module('experiment.app').controller('experimentController', function ($scope, timeService, $location, $http, $timeout) {
         'use strict';
         $scope.solution={
             solution:"",
@@ -40,20 +40,31 @@
             console.log(response.data);
             $scope.solution.sentence=response.data.sentence;
             $scope.solution.order=response.data.order;
+            $scope.dynamic = response.data.index;
             timeService.eventTrigger();
         }, function errorCallback(response) {
             $scope.error.message = JSON.stringify({data: response.data})
         });
 
+        $scope.logout = function(){
+
+            var res = $http({
+                method: 'GET',
+                url: '/api/out'
+            });
+            res.success(function(response){
+                window.location.href = '/';
+            });
+            res.error(function(response){
+                $scope.error.message = JSON.stringify({data: response.data});
+            });
+        };
 
 
         $scope.send = function(){
             timeService.eventTrigger();
             $scope.serverInteraction = true;
-            //if ($scope.recognizing) {
-            //    $scope.recognition.stop();
-            //    $scope.recognizing = false;
-            //}
+
             if($scope.listening){
                 $scope.listener.stop()
                 $scope.listening = false;
@@ -75,9 +86,27 @@
                 }
                 else{
                     $scope.error.message = "";
-                    $scope.solution.sentence=data.sentence;
-                    $scope.solution.order=data.order;
-                    timeService.eventTrigger();
+                    if(data.index == '0'){
+                        $scope.serverInteraction = true;
+                        $scope.solution.order= "MODULE STARTING";
+                        $scope.solution.sentence="IN 4...";
+                        $timeout(function() {$scope.solution.sentence="IN 3...";}, 1000)
+                            .then(function(){$timeout(function() {$scope.solution.sentence="IN 2...";}, 1000)
+                                .then(function(){$timeout(function() {$scope.solution.sentence="IN 1...";}, 1000)
+                                    .then(function(){$timeout(function() {$scope.solution.sentence="NOW!!!";}, 1000)
+                                        .then(function(){
+                                            $scope.solution.sentence=data.sentence;
+                                            $scope.solution.order=data.order;
+                                            $scope.dynamic = data.index;
+                                            $scope.serverInteraction = false;
+                                            timeService.eventTrigger();
+                                        })})})});
+                    }else{
+                        $scope.solution.sentence=data.sentence;
+                        $scope.solution.order=data.order;
+                        $scope.dynamic = data.index;
+                        timeService.eventTrigger();
+                    }
                 }
                 $scope.serverInteraction = false;
             });
@@ -97,6 +126,8 @@
         $scope.recognizing = false;
         $scope.ignore_onend = false;
         $scope.start_timestamp = null;
+        $scope.dynamic = 0;
+        $scope.max = 4;
         if (!('webkitSpeechRecognition' in window)) {
             //upgrade();
             console.log("No webkit");
@@ -131,28 +162,7 @@
                     $scope.ignore_onend = true;
                 }
             };
-            //$scope.recognition.onend = function () {
-            //    $scope.recognizing = false;
-            //    if ($scope.ignore_onend) {
-            //        return;
-            //    }
-            //    //start_img.src = 'mic.gif';
-            //    if (!$scope.final_transcript) {
-            //        $scope.showInfo('info_start');
-            //        return;
-            //    }
-            //    $scope.showInfo('');
-            //    if (window.getSelection) {
-            //        window.getSelection().removeAllRanges();
-            //        var range = document.createRange();
-            //        range.selectNode(document.getElementById('final_span'));
-            //        window.getSelection().addRange(range);
-            //    }
-            //    if (create_email) {
-            //        create_email = false;
-            //        createEmail();
-            //    }
-            //};
+
             $scope.recognition.onresult = function (event) {
                 var interim_transcript = '';
                 for (var i = event.resultIndex; i < event.results.length; ++i) {

@@ -3,7 +3,9 @@ var app = angular.module('experiment.app', [
     //'ngRoute',
     //'ui.router',
     'ngAnimate',
-    'angularAudioRecorder'
+    'angularAudioRecorder',
+    'ngSanitize',
+    'ui.bootstrap'
 ]);
 app.config(function ($locationProvider) {
 

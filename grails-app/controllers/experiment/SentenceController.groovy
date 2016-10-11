@@ -3,22 +3,21 @@ import grails.converters.JSON
 
 
 //import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText
-
+import static org.springframework.http.HttpStatus.NO_CONTENT
 
 class SentenceController extends BaseController {
     static responseFormats = ['json']
-    static allowedMethods = [index: "GET", save: 'POST', login: 'POST', ibmCall: 'POST']
+    static allowedMethods = [index: "GET", save: 'POST', login: 'POST', out: 'GET', ibmCall: 'POST']
     def fileService
     def index() {
-//        def data = fileService.getSentencesScrambled()
-
 
         def currentIndex = session.getAttribute("index")
         def userData = session.getAttribute("data")
 
         def data = [
                 sentence:userData["sentences"][currentIndex % userData["sentences"].size()],
-                order: currentIndex<userData["orders"].size()*userData["sentences"].size()?userData["orders"][currentIndex.intdiv(userData["sentences"].size())]:"DONE"
+                order: currentIndex<userData["orders"].size()*userData["sentences"].size()?userData["orders"][currentIndex.intdiv(userData["sentences"].size())]:"DONE",
+                index: currentIndex % userData["sentences"].size()
         ]
         if(userData["orders"].size()*userData["sentences"].size()<=currentIndex){
             session.invalidate()
@@ -42,9 +41,9 @@ class SentenceController extends BaseController {
 
     def login(LoginCommand loginCommand){
         if (loginCommand.hasErrors()) {
-            handleValidationException(loginCommand.errors)
+            handleValidationError(loginCommand.errors)
         }
-        session["user"] = loginCommand.id
+        session["user"] = session.id //loginCommand.id
         session["userName"] = loginCommand.name
         session["data"] = fileService.getScrambledData()
         session["index"] = 0
@@ -54,17 +53,20 @@ class SentenceController extends BaseController {
         }
     }
 
+    def out(){
+        session.invalidate()
+        render status: NO_CONTENT.value()
+    }
+
     def save(SentenceCommand sentenceCommand){
 
         if (sentenceCommand.hasErrors()) {
-            handleValidationException(sentenceCommand.errors)
-        }
-        else{
-            session["index"] = session.getAttribute("index")+1
-            fileService.writeFile(session.getAttribute("user"),sentenceCommand)
-            saveDB(sentenceCommand)
+            handleValidationError(sentenceCommand.errors)
         }
 
+        session["index"] = session.getAttribute("index")+1
+//        fileService.writeFile(session.getAttribute("user"),sentenceCommand)
+        saveDB(sentenceCommand)
         index()
     }
 

@@ -2,15 +2,7 @@ class UrlMappings {
 
     static mappings = {
         "/"(controller: 'root', action: 'index')
-//        "/$controller/$action?/$id?(.$format)?"{
-//            constraints {
-//                // apply constraints here
-//            }
-//        }
 
-//        "/"(controller: "root") {
-//            action = [GET: 'index']
-//        }
         "/exception/**"(controller: 'exception', action: 'unsupportedBrowser') {
 
         }
@@ -39,11 +31,14 @@ class UrlMappings {
         "/api/sentences"(controller: 'sentence') {
             action = [GET: 'index', POST: 'save']
         }
-        "/api/watson"(controller: 'sentence') {
-            action = [POST: 'ibmCall']
-        }
+//        "/api/watson"(controller: 'sentence') {
+//            action = [POST: 'ibmCall']
+//        }
         "/api/login"(controller: 'sentence') {
             action = [POST: 'login']
+        }
+        "/api/out"(controller: 'sentence') {
+            action = [GET: 'out']
         }
         /**
          * ERRORS

@@ -19,15 +19,27 @@
             </div>
             <div class="form-horizontal">
                 <div class="form-group">
+                    <uib-progressbar max="max" value="dynamic"><span style="color:white; white-space:nowrap;">{{dynamic}} / {{max}}</span></uib-progressbar>
+                </div>
+            </div>
+
+            <div class="form-horizontal">
+                <div class="form-group">
                     <div class="col-xs-10">
                         <textarea  rows="5" class="form-control" id="text" style="font-family: monospace" ng-disabled="recognizing"></textarea>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <div class="col-xs-8 col-xs-offset-2">
+                <div class="col-xs-0 col-xs-offset-0">
+                    <div class="pull-left">
+                        %{--<button class="btn btn-default" ng-click="startButton($event)">{{recognizing ? "Stop Listening" : "Listen"}}</button>--}%
+                        <button class="btn btn-warning" ng-click="logout()">Logout</button>
+                    </div>
+                </div>
+                <div class="col-xs-9 col-xs-offset-0">
                     <div class="pull-right">
-                        <button class="btn btn-default" ng-click="startButton($event)">{{recognizing ? "Stop Listening" : "Listen"}}</button>
+                        %{--<button class="btn btn-default" ng-click="startButton($event)">{{recognizing ? "Stop Listening" : "Listen"}}</button>--}%
                         <button class="btn btn-default" ng-click="send()" ng-disabled="serverInteraction">Send</button>
                     </div>
                 </div>
@@ -37,7 +49,7 @@
         <footer class="text-center">
             <div class="container-fluid">
                 <div class="row">
-                    ERROR : {{error.message}}
+                   {{error.message}}
                 </div>
             </div>
         </footer>

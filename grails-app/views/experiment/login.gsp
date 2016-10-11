@@ -21,12 +21,12 @@
                             <input id="name" class="form-control" ng-model="subject.name" type="text">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="uid" class="col-xs-2 control-label">Subject Unique ID</label>
-                        <div class="col-xs-10">
-                            <input id="uid" class="form-control" ng-model="subject.id" type="text">
-                        </div>
-                    </div>
+                    %{--<div class="form-group">--}%
+                        %{--<label for="uid" class="col-xs-2 control-label">Subject Unique ID</label>--}%
+                        %{--<div class="col-xs-10">--}%
+                            %{--<input id="uid" class="form-control" ng-model="subject.id" type="text">--}%
+                        %{--</div>--}%
+                    %{--</div>--}%
                     <div class="form-group">
                         <div class="col-xs-10 col-xs-offset-1">
                             <div class="pull-right">
@@ -40,7 +40,7 @@
             <footer class="text-center">
                 <div class="container-fluid">
                     <div class="row">
-                        ERROR : {{error.message}}
+                        {{error.message}}
                     </div>
                 </div>
             </footer>

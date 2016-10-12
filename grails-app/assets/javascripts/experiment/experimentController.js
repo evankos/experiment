@@ -30,7 +30,14 @@
         };
 
 
-
+        $scope.serverInteraction = false;
+        $scope.create_email = false;
+        $scope.final_transcript = '';
+        $scope.recognizing = false;
+        $scope.ignore_onend = false;
+        $scope.start_timestamp = null;
+        $scope.dynamic = 0;
+        $scope.max = 30;
 
 
         $http({
@@ -59,11 +66,13 @@
                 $scope.error.message = JSON.stringify({data: response.data});
             });
         };
-
+        $scope.send_secure = function(){
+            if(!$scope.serverInteraction) $scope.send();
+        };
 
         $scope.send = function(){
             timeService.eventTrigger();
-            $scope.serverInteraction = true;
+
 
             if($scope.listening){
                 $scope.listener.stop()
@@ -71,11 +80,12 @@
             }
             $scope.solution.solution= document.getElementById("text").value;
             $scope.solution.time= timeService.getInterval();
-
+            $scope.serverInteraction = true;
             var res = $http.post('/api/sentences', $scope.solution);
             res.success(function(data, status, headers, config) {
 
                 if(data.order=="DONE"){
+                    $scope.serverInteraction = false;
                     if ($scope.recognizing) {
                         $scope.recognition.stop();
                         $scope.recognizing = false;
@@ -85,9 +95,9 @@
                     window.location.href = '/';
                 }
                 else{
+                    $scope.serverInteraction = true;
                     $scope.error.message = "";
                     if(data.index == '0'){
-                        $scope.serverInteraction = true;
                         $scope.solution.order= "MODULE STARTING";
                         $scope.solution.sentence="IN 4...";
                         $timeout(function() {$scope.solution.sentence="IN 3...";}, 1000)
@@ -102,13 +112,13 @@
                                             timeService.eventTrigger();
                                         })})})});
                     }else{
+                        $scope.serverInteraction = false;
                         $scope.solution.sentence=data.sentence;
                         $scope.solution.order=data.order;
                         $scope.dynamic = data.index;
                         timeService.eventTrigger();
                     }
                 }
-                $scope.serverInteraction = false;
             });
             res.error(function(data, status, headers, config) {
                 $scope.serverInteraction = false;
@@ -120,78 +130,6 @@
         $scope.showInfo = function(s){
             $scope.error.message = s;
         };
-        $scope.serverInteraction = false;
-        $scope.create_email = false;
-        $scope.final_transcript = '';
-        $scope.recognizing = false;
-        $scope.ignore_onend = false;
-        $scope.start_timestamp = null;
-        $scope.dynamic = 0;
-        $scope.max = 4;
-        if (!('webkitSpeechRecognition' in window)) {
-            //upgrade();
-            console.log("No webkit");
-            $scope.error.message = "Please update your chrome version to >33";
-        } else {
-
-            $scope.recognition = new webkitSpeechRecognition();
-            $scope.recognition.continuous = true;
-            $scope.recognition.interimResults = true;
-            $scope.recognition.onstart = function () {
-                $scope.recognizing = true;
-                //showInfo('info_speak_now');
-                //start_img.src = 'mic-animate.gif';
-            };
-            $scope.recognition.onerror = function (event) {
-                if (event.error == 'no-speech') {
-                    //start_img.src = 'mic.gif';
-                    $scope.showInfo('info_no_speech');
-                    $scope.ignore_onend = true;
-                }
-                if (event.error == 'audio-capture') {
-                    //start_img.src = 'mic.gif';
-                    $scope.showInfo('info_no_microphone');
-                    $scope.ignore_onend = true;
-                }
-                if (event.error == 'not-allowed') {
-                    if (event.timeStamp - $scope.start_timestamp < 100) {
-                        $scope.showInfo('info_blocked');
-                    } else {
-                        $scope.showInfo('info_denied');
-                    }
-                    $scope.ignore_onend = true;
-                }
-            };
-
-            $scope.recognition.onresult = function (event) {
-                var interim_transcript = '';
-                for (var i = event.resultIndex; i < event.results.length; ++i) {
-                    if (event.results[i].isFinal) {
-                        $scope.final_transcript += event.results[i][0].transcript;
-                    } else {
-                        interim_transcript += event.results[i][0].transcript;
-                    }
-                }
-
-                document.getElementById("text").value = $scope.final_transcript;
-            };
-        }
-        $scope.startButton = function (event) {
-            if ($scope.recognizing) {
-                $scope.recognition.stop();
-                $scope.recognizing = false;
-                return;
-            }
-            $scope.recognizing = true;
-            $scope.final_transcript = '';
-            document.getElementById("text").value = $scope.final_transcript;
-            //$scope.recognition.lang = 'en-US';
-            $scope.recognition.lang = 'en-GB';
-            $scope.recognition.start();
-            $scope.ignore_onend = false;
-            $scope.showInfo('info_allow');
-            $scope.start_timestamp = event.timeStamp;
-        }
 
     })
 })();

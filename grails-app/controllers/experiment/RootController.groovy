@@ -21,7 +21,10 @@ class RootController extends BaseController {
 
     def servePage() {
 
-        session.getAttribute('user')?render(view: "/${params.appName}/proceding"):render(view: "/${params.appName}/login")
+        if(params.appName!='administration')
+            session.getAttribute('user')?render(view: "/${params.appName}/proceding"):render(view: "/${params.appName}/login")
+        else
+            render(view: "/${params.appName}/index")
 //        session.getAttribute('user')?render(view: "/${params.appName}/${params.pageName}"):render(view: "/${params.appName}/pages/login")
 
     }

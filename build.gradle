@@ -65,8 +65,6 @@ dependencies {
     compile "org.hibernate:hibernate-ehcache"
     compile "org.grails.plugins:scaffolding"
 
-//    compile "org.grails.plugins:asset-pipeline:2.11.0"
-
 
     runtime "org.grails.plugins:asset-pipeline"
 

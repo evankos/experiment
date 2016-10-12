@@ -8,6 +8,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:javascript src="experiment.js"/>
 </head>
 <body>
     <div ng-controller="experimentController">
@@ -40,7 +41,7 @@
                 <div class="col-xs-9 col-xs-offset-0">
                     <div class="pull-right">
                         %{--<button class="btn btn-default" ng-click="startButton($event)">{{recognizing ? "Stop Listening" : "Listen"}}</button>--}%
-                        <button class="btn btn-default" ng-click="send()" ng-disabled="serverInteraction">Send</button>
+                        <button class="btn btn-default" ng-click="send_secure()" >Send</button>
                     </div>
                 </div>
             </div>

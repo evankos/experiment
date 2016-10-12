@@ -40,6 +40,9 @@ class UrlMappings {
         "/api/out"(controller: 'sentence') {
             action = [GET: 'out']
         }
+        "/api/results"(controller: 'sentence') {
+            action = [POST: 'results']
+        }
         /**
          * ERRORS
          */

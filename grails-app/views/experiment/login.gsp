@@ -9,6 +9,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
+    <asset:javascript src="login.js"/>
 </head>
 <body>
     <div class="container-fluid">

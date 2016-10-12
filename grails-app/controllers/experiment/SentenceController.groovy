@@ -1,13 +1,15 @@
 package experiment
 import grails.converters.JSON
 
+import java.util.logging.Filter
+
 
 //import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText
 import static org.springframework.http.HttpStatus.NO_CONTENT
 
 class SentenceController extends BaseController {
     static responseFormats = ['json']
-    static allowedMethods = [index: "GET", save: 'POST', login: 'POST', out: 'GET', ibmCall: 'POST']
+    static allowedMethods = [index: "GET", save: 'POST', login: 'POST', out: 'GET', ibmCall: 'POST', results: 'POST']
     def fileService
     def index() {
 
@@ -68,6 +70,18 @@ class SentenceController extends BaseController {
 //        fileService.writeFile(session.getAttribute("user"),sentenceCommand)
         saveDB(sentenceCommand)
         index()
+    }
+
+    def results(FilterCommand filterCommand){
+        def results = DataPoints.findAllByIdBetween(filterCommand.firstResult,filterCommand.firstResult+filterCommand.itemsPerPage)
+        int dataCount = DataPoints.count()
+        def data = [
+                items:results,
+                totalCount:dataCount
+        ]
+        JSON.use('deep') {
+            render data as JSON
+        }
     }
 
     private void saveDB(SentenceCommand sentenceCommand){
